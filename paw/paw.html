@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. PAW法による計算 &mdash; PHASE/0 Manual 2021.02 ドキュメント</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/phase0.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="7. 計算精度など補足事項" href="../supplement/supplement.html" />
+    <link rel="prev" title="5. 応用機能" href="../advanced/advanced_all.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> PHASE/0 Manual
+            <img src="../_static/image1.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction/introduction.html">1. はじめに</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../first_step/first_step.html">2. PHASE/0の基本的な利用方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../input_parameters/input_parameters.html">3. 入力パラメータファイル：nfinp.data（詳細版）</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/basics.html">4. 基本機能を利用した計算例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced/advanced_all.html">5. 応用機能</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. PAW法による計算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">6.1. 機能の概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">6.2. 入力パラメータ、計算の実行方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">6.3. 計算例：体心立方構造クロム</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#paw-gloption-section">6.4. PAW法の精度を向上させる方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">6.5. PAW法で有効な計算機能一覧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">6.6. 参考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../supplement/supplement.html">7. 計算精度など補足事項</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter08_10/install.html">8. PHASE/0のインストール</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter08_10/commands_tools.html">9. PHASE/0プログラム、ツールの実行方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../chapter08_10/inputs_outputs.html">10. 入出力ファイル</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../uvsor/uvsor.html">11. 誘電応答解析機能 UVSOR</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PHASE/0 Manual</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">6. </span>PAW法による計算</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/paw/paw.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="paw">
+<span id="paw-chapter"></span><h1><span class="section-number">6. </span>PAW法による計算<a class="headerlink" href="#paw" title="このヘッドラインへのパーマリンク"></a></h1>
+<section id="id1">
+<h2><span class="section-number">6.1. </span>機能の概要<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>PAW法 <a class="reference internal" href="#blochl94" id="id2"><span>[Blochl94]</span></a> <a class="reference internal" href="#kresse99" id="id3"><span>[Kresse99]</span></a> とは，projector-augmented wave 法の略称です。ウルトラソフト擬ポテンシャル法と深い関係のある計算手法ですが，ウルトラソフト擬ポテンシャル法と比較すると，特に磁性を考慮する場合や電荷移動の大きな系において高精度な計算が行えるとされている計算手法です。ここでは，PAW法による計算をPHASE で実行する方法を説明します。</p>
+</section>
+<section id="id4">
+<h2><span class="section-number">6.2. </span>入力パラメータ、計算の実行方法<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>PAW法を利用するためには，PAWポテンシャルを利用する必要があります。PAWポテンシャルは，擬ポテンシャル格納ディレクトリーに</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>元素名_ggapbe_paw_us.pp
+元素名_ggapbe_paw_nc.pp
+</pre></div>
+</div>
+<p>というファイル名で存在します。通常のノルム保存およびウルトラソフトポテンシャルと同様，file_names.dataファイルにおいてF_POT識別子で対応する元素名のファイルを指定します。さらに，以下のようにpaw を利用するような指定を入力ファイルに記述します。</p>
+<p>PAWポテンシャルを指定しても，デフォルトの状態ではPAWの計算は行われません。PAW法の計算を行うには，入力ファイルのaccuracyブロックで変数paw を定義し，その値をonにする必要があります。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>accuracy{
+    paw = on
+}
+</pre></div>
+</div>
+<p>PAW法の場合，欠損電荷の扱い方を変更することによって収束性を向上させることができる場合があります。以下の設定を 施すことにより，多くの場合収束が加速されます。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>charge_mixing{
+    ...
+    sw_mix_charge_hardpart = on
+}
+</pre></div>
+</div>
+<p>固定電荷の計算を行う場合，さらにfile_names.dataにF_CNTN_BIN_PAW識別子を利用してPAW計算用のデータを指定し，読み込ませる必要があります。このファイルの既定のファイル名はcontinue_bin_paw.dataです。たとえばSCF計算を行ったディレクトリが1階層上のディレクトリだった場合，下記のような記述が必要です。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>&amp;fnames
+...
+...
+F_CNTN_BIN_PAW=&#39;../continue_bin_paw.data&#39;
+/
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><span class="section-number">6.3. </span>計算例：体心立方構造クロム<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>PAW法を利用した計算例として，体心立方構造クロムの格子定数の計算例を紹介します。クロムは，ウルトラソフト擬ポテンシャルで計算すると格子定数が過大評価され，また体積弾性率が過小評価されます。この点がどのように改善されるか確認します。</p>
+<p>計算に利用したデータは， <code class="code docutils literal notranslate"><span class="pre">samples/paw_Cr</span></code> にあります。 <code class="code docutils literal notranslate"><span class="pre">samples/paw_Cr</span></code> には，以下のファイルとディレクトリがあります。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>paw/
+us/
+</pre></div>
+</div>
+<p>ディレクトリpawにPAW用の入力データが，usにウルトラソフト用の入力データが格納されています。さらにpaw,
+usの各ディレクトリにも次のファイルとディレクトリがあります。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>vol20/
+vol21/
+......
+</pre></div>
+</div>
+<p>vol20, vol21, ...はそれぞれ体積20Å<sup>3</sup>, 21Å<sup>3</sup>,...の入力データに対応します。</p>
+<p>paw, usディレクトリー以下のサブディレクトリーの入力ファイルはほとんど違いはりませんが，以下のようにaccuracyブロックにおける指定が異なります。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>accuracy{
+  paw = on (ディレクトリーpawの下のファイルの場合)
+}
+accuracy{
+  paw = off (ディレクトリーusの下のファイルの場合)
+}
+</pre></div>
+</div>
+<p>計算の結果得られたEV曲線を <a class="reference internal" href="#ev-cr-paw"><span class="std std-numref">図 6.1</span></a> に示します。
+一見して明らかなように，PAW法とUS法とでは異なるEV曲線が得られます。
+さらに，このEV曲線をもとに格子定数，体積弾性率，凝集エネルギーをもとめた結果を実測値とともに <a class="reference internal" href="#paw-cr-result"><span class="std std-numref">表 6.1</span></a> にまとめました。
+PAW法は格子定数，体積弾性率がUS法よりも改善している（実験値との一致がよい）ことが分かります。</p>
+<figure class="align-default" id="ev-cr-paw">
+<a class="reference internal image-reference" href="../_images/paw_image1.svg"><img alt="../_images/paw_image1.svg" src="../_images/paw_image1.svg" width="480px" /></a>
+<figcaption>
+<p><span class="caption-number">図 6.1 </span><span class="caption-text">クロムのEV 曲線。赤線がPAW の結果，緑線がUS の結果。各手法で得られた最も低いエネルギーをエネルギーの原点としている。</span><a class="headerlink" href="#ev-cr-paw" title="この画像へのパーマリンク"></a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default" id="paw-cr-result">
+<caption><span class="caption-number">表 6.1 </span><span class="caption-text">PAW 法およびUS 法によってもとめた格子定数，体積弾性率，凝集エネルギー</span><a class="headerlink" href="#paw-cr-result" title="このテーブルへのパーマリンク"></a></caption>
+<colgroup>
+<col style="width: 48%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>US</p></th>
+<th class="head"><p>PAW</p></th>
+<th class="head"><p>実測</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>a (Å)</p></td>
+<td><p>2.994</p></td>
+<td><p>2.886</p></td>
+<td><p>2.88</p></td>
+</tr>
+<tr class="row-odd"><td><p>B (GPa)</p></td>
+<td><p>89.2</p></td>
+<td><p>150.5</p></td>
+<td><p>190.1</p></td>
+</tr>
+<tr class="row-even"><td><p>Ecoh (eV/atom)</p></td>
+<td><p>4.01</p></td>
+<td><p>3.065</p></td>
+<td><p>4.10</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paw-gloption-section">
+<span id="id6"></span><h2><span class="section-number">6.4. </span>PAW法の精度を向上させる方法<a class="headerlink" href="#paw-gloption-section" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>PAW法で実施される球面積分は，デフォルトでは球面調和関数を利用した近似による高速化がなされます。この積分を，近似をせずに計算するオプションも用意されています。入力パラメーターファイルに以下のような記述を加えるとこのオプションを利用することができます。</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>paw_one_center_integral{
+  element_list{
+    #tag element surface_integral_method
+          Fe gl
+          O gl
+  }
+}
+</pre></div>
+</div>
+<p>この例では，FeとOという二種類の元素が定義されていることを仮定しました。利用する場合元素数分定義する必要があります。</p>
+<p>この方法を使うと交換相関相互作用の処理時間が長くなってしまいますが，精度が向上し（数値的により厳密に解けるようになり），SCF計算の収束性が向上する場合があります。</p>
+</section>
+<section id="id7">
+<h2><span class="section-number">6.5. </span>PAW法で有効な計算機能一覧<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク"></a></h2>
+<p>PAW法で利用可能な機能です。</p>
+<ul class="simple">
+<li><p>全エネルギー</p></li>
+<li><p>対称性</p></li>
+<li><p>スピン分極</p></li>
+<li><p>構造最適化</p></li>
+<li><p>全電荷密度・部分電荷密度の出力</p></li>
+<li><p>各種状態密度の計算</p></li>
+<li><p>バンド構造</p></li>
+<li><p>ストレステンソルの計算</p></li>
+<li><p>仕事関数</p></li>
+<li><p>振動解析</p></li>
+<li><p>分子動力学</p></li>
+<li><p>DFT+U</p></li>
+<li><p>ESM法</p></li>
+<li><p>拘束条件付きダイナミクス</p></li>
+<li><p>メタダイナミクス</p></li>
+<li><p>NEB</p></li>
+<li><p>単位胞最適化</p></li>
+<li><p>ノンコリニア磁性</p></li>
+<li><p>スピン軌道相互作用</p></li>
+<li><p>UVSOR-Epsilonの各機能</p></li>
+<li><p>UVSOR-Berry-Phononの各機能</p></li>
+</ul>
+</section>
+<section id="id8">
+<h2><span class="section-number">6.6. </span>参考文献<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク"></a></h2>
+<dl class="citation">
+<dt class="label" id="blochl94"><span class="brackets"><a class="fn-backref" href="#id2">Blochl94</a></span></dt>
+<dd><ol class="upperalpha simple" start="16">
+<li><ol class="upperalpha simple" start="5">
+<li><p>Blöchl,  Phys. Rev. B 50 vol. 24 17953–17978 (1994).</p></li>
+</ol>
+</li>
+</ol>
+</dd>
+<dt class="label" id="kresse99"><span class="brackets"><a class="fn-backref" href="#id3">Kresse99</a></span></dt>
+<dd><ol class="upperalpha simple" start="7">
+<li><p>Kresse and D. Joubert Phys. Rev. B 59, 1758 (1999).</p></li>
+</ol>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../advanced/advanced_all.html" class="btn btn-neutral float-left" title="5. 応用機能" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../supplement/supplement.html" class="btn btn-neutral float-right" title="7. 計算精度など補足事項" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, PHASEシステム研究会.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
